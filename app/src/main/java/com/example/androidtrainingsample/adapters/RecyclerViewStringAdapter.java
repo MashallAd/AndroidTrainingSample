@@ -21,6 +21,8 @@ public class RecyclerViewStringAdapter extends RecyclerView.Adapter<RecyclerView
 	private List<String> dataList;
 	private LayoutInflater inflater;
 
+	private OnItemClickedListener mOnItemClickedListener;
+
 	public RecyclerViewStringAdapter(Context context, List<String> dataList) {
 		this.context = context;
 		this.dataList = dataList;
@@ -36,8 +38,15 @@ public class RecyclerViewStringAdapter extends RecyclerView.Adapter<RecyclerView
 	}
 
 	@Override
-	public void onBindViewHolder(ViewHolder holder, int position) {
+	public void onBindViewHolder(ViewHolder holder, final int position) {
 		holder.tv.setText(dataList.get(position));
+		holder.tv.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				if (mOnItemClickedListener != null)
+					mOnItemClickedListener.onItemClicked(view, position);
+			}
+		});
 	}
 
 	@Override
@@ -53,5 +62,9 @@ public class RecyclerViewStringAdapter extends RecyclerView.Adapter<RecyclerView
 			super(itemView);
 			tv = (TextView) itemView.findViewById(R.id.tv_title);
 		}
+	}
+
+	public void setOnItemClickedListener(OnItemClickedListener onItemClickedListener) {
+		this.mOnItemClickedListener = onItemClickedListener;
 	}
 }

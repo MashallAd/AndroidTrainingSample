@@ -1,7 +1,6 @@
 package com.example.androidtrainingsample.gettingstarted.fragments;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.androidtrainingsample.R;
+import com.example.androidtrainingsample.adapters.OnItemClickedListener;
 import com.example.androidtrainingsample.adapters.RecyclerViewStringAdapter;
 
 import java.util.ArrayList;
@@ -19,14 +19,16 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link TitleFragment.OnFragmentInteractionListener} interface
+ * {@link TitleFragment.OnTitleSelectedListener} interface
  * to handle interaction events.
  * Use the {@link TitleFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
 public class TitleFragment extends Fragment {
 
-	private OnFragmentInteractionListener mListener;
+	private static final String DATA_SOURCE = "data_sourece";
+
+	private OnTitleSelectedListener mListener;
 
 	private List<String> titleList;
 	private RecyclerView recyclerView;
@@ -36,8 +38,11 @@ public class TitleFragment extends Fragment {
 		// Required empty public constructor
 	}
 
-	public static TitleFragment newInstance() {
+	public static TitleFragment newInstance(List<String> titleList) {
 		TitleFragment fragment = new TitleFragment();
+		Bundle bundle = new Bundle();
+		bundle.putStringArrayList(DATA_SOURCE, (ArrayList<String>) titleList);
+		fragment.setArguments(bundle);
 		return fragment;
 	}
 
@@ -45,13 +50,13 @@ public class TitleFragment extends Fragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		initData();
-	}
+		Bundle args = getArguments();
+		if (args != null) {
+			titleList = args.getStringArrayList(DATA_SOURCE);
+		}
 
-	private void initData() {
-		titleList = new ArrayList<>();
-		for (int i = 0; i < 20; i++) {
-			titleList.add("Title: " + i);
+		if (titleList == null) {
+			titleList = new ArrayList<>();
 		}
 	}
 
@@ -62,24 +67,37 @@ public class TitleFragment extends Fragment {
 		recyclerView = (RecyclerView) containerView.findViewById(R.id.recyclerview);
 
 		recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-		recyclerView.setAdapter(new RecyclerViewStringAdapter(getContext(), titleList));
+		RecyclerViewStringAdapter adapter = new RecyclerViewStringAdapter(getContext(), titleList);
+		adapter.setOnItemClickedListener(new OnItemClickedListener() {
+			@Override
+			public void onItemClicked(View view, int position) {
+				onButtonPressed(position);
+			}
+
+			@Override
+			public void onItemLongClicked(View view, int position) {
+
+			}
+		});
+		recyclerView.setAdapter(adapter);
+
 		return containerView;
 	}
 
-	public void onButtonPressed(Uri uri) {
+	public void onButtonPressed(int position) {
 		if (mListener != null) {
-			mListener.onFragmentInteraction(uri);
+			mListener.onTitleSelected(position);
 		}
 	}
 
 	@Override
 	public void onAttach(Context context) {
 		super.onAttach(context);
-		if (context instanceof OnFragmentInteractionListener) {
-			mListener = (OnFragmentInteractionListener) context;
+		if (context instanceof OnTitleSelectedListener) {
+			mListener = (OnTitleSelectedListener) context;
 		} else {
 			throw new RuntimeException(context.toString()
-					+ " must implement OnFragmentInteractionListener");
+					+ " must implement OnTitleSelectedListener");
 		}
 	}
 
@@ -99,8 +117,8 @@ public class TitleFragment extends Fragment {
 	 * "http://developer.android.com/training/basics/fragments/communicating.html"
 	 * >Communicating with Other Fragments</a> for more information.
 	 */
-	public interface OnFragmentInteractionListener {
+	public interface OnTitleSelectedListener {
 		// TODO: Update argument type and name
-		void onFragmentInteraction(Uri uri);
+		void onTitleSelected(int position);
 	}
 }

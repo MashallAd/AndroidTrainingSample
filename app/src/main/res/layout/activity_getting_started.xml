@@ -19,6 +19,7 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="showDynamicUIWithFragment"/>
+            android:text="showDynamicUIWithFragment"
+            android:onClick="@{handlers::showDynamicUIWithFragment}"/>
     </LinearLayout>
 </layout>
