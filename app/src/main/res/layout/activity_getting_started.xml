@@ -21,5 +21,11 @@
             android:layout_height="wrap_content"
             android:text="showDynamicUIWithFragment"
             android:onClick="@{handlers::showDynamicUIWithFragment}"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="InteractWithOtherApp"
+            android:onClick="@{handlers::startInteractWithOtherApp}"/>
     </LinearLayout>
 </layout>

@@ -8,6 +8,7 @@ import android.view.View;
 import com.example.androidtrainingsample.R;
 import com.example.androidtrainingsample.databinding.ActivityGettingStartedBinding;
 import com.example.androidtrainingsample.gettingstarted.fragments.FragmentContainerActivity;
+import com.example.androidtrainingsample.gettingstarted.interactwithotherapp.InteractWithOtherAppActivity;
 import com.example.androidtrainingsample.utils.BaseUtils;
 
 public class GettingStartedActivity extends AppCompatActivity {
@@ -24,4 +25,9 @@ public class GettingStartedActivity extends AppCompatActivity {
 	public void showDynamicUIWithFragment(View v) {
 		BaseUtils.startActivity(this, FragmentContainerActivity.class);
 	}
+
+	public void startInteractWithOtherApp(View v) {
+		BaseUtils.startActivity(this, InteractWithOtherAppActivity.class);
+	}
+
 }

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="handlers"
+            type="com.example.androidtrainingsample.gettingstarted.interactwithotherapp.InteractWithOtherAppActivity"/>
+    </data>
+    <LinearLayout
+        android:id="@+id/activity_interact_with_other_app"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context="com.example.androidtrainingsample.gettingstarted.interactwithotherapp.InteractWithOtherAppActivity">
+
+        <EditText
+            android:id="@+id/et_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/btn_click"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="startOtherApp"
+            android:onClick="@{handlers::startOtherApp}"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="takePhoto"
+            android:onClick="@{handlers::startTakePhoto}"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/iv"/>
+    </LinearLayout>
+</layout>
